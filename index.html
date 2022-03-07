@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="site.css">
+  </head>
+  <body>
+    
+    <div id="Buttons"></div>
+    <div id="mydiv"></div>
+    <div id="Modal" style="display: none;"></div>
+
+    <script type="text/babel">
+      class car{
+            constructor(name, model, colour){
+                this.brand = name;
+                this.model = model;
+                this.colour = colour;
+            }
+
+            present(){
+                return 'I have a ' + this.brand + " " + this.model + " that is " +this.colour;
+            }
+        }
+
+      const myCar = new car("Ford", "Focus", "Red");
+      const carTwo = new car("Merc", "Maybach", "Silver");
+      var list = [carTwo, myCar];
+      function CarTable() {
+          const tableOfCars = (
+            <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Colour</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {list.map((i) => <CarTblRow brand={i.brand} model={i.model} colour={i.colour} />)}
+                </tbody>
+                
+            </table>
+          );
+        return tableOfCars;
+      }
+
+      function CarTblRow(probs){
+        return(
+        <tr>
+          <td scope="row">{probs.brand}</td>
+          <td>{probs.model}</td>
+          <td>{probs.colour}</td>
+        </tr>
+        );
+      }
+
+      function ButtonRow(){
+
+        const but = (
+          <div>
+          <button className="btn btn-primary" onClick={AddCarModalShow}>Add Vehicle</button>
+          </div>
+        );
+        return but;
+      }
+      // Get the modal
+      var modal = document.getElementById("Modal");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+
+      function AddCarModalClose(){
+        modal.style.display = "none";
+      }
+
+      function AddCarModalShow(){
+        modal.style.display = "block";
+      }
+
+      function AddCarModal(){
+        const modal = (
+          <div id="myModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onClick={AddCarModalClose}>&times;</span>
+            <form>
+            <label>Car Brand:</label><br/>
+            <input type="text"/><br/>
+            <label>Car Model:</label><br/>
+            <input type="text"/><br/>
+            <label>Car Colour:</label><br/>
+            <input type="text"/><br/><br/>
+            <button class="btn btn-danger">Cancel</button><button class="btn btn-primary">Add</button>
+          </form>
+          </div>
+          </div>
+        );
+        return modal;
+      }
+
+      ReactDOM.render(<CarTable />, document.getElementById('mydiv'))
+      ReactDOM.render(<ButtonRow />, document.getElementById('Buttons'))
+      ReactDOM.render(<AddCarModal/>, document.getElementById('Modal'))
+      
+    </script>
+
+  </body>
+</html>
